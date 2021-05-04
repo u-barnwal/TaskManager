@@ -1,4 +1,4 @@
-import { TaskDTO } from "./dto/task.dto";
+import { TaskDTO } from "../dto/task.dto";
 
 export class TaskAPI {
   static async getAll(): Promise<TaskDTO[]> {

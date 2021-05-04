@@ -2,8 +2,8 @@ import { Grid } from "@material-ui/core";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Task from "../components/Task";
-import { TaskDTO } from "./api/dto/task.dto";
-import { TaskAPI } from "./api/task.api";
+import { TaskDTO } from "../dto/task.dto";
+import { TaskAPI } from "../api/task.api";
 
 export default function Home() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);

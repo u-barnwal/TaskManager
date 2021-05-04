@@ -1,5 +1,5 @@
 import React from "react";
-import { TaskDTO } from "../../pages/api/dto/task.dto";
+import { TaskDTO } from "../../dto/task.dto";
 
 interface Props extends TaskDTO {}
 

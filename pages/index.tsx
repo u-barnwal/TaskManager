@@ -14,6 +14,10 @@ export default function Home() {
     setTasks([...tasks, task]);
   };
 
+  const deleteTask = (id: number) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
   useEffect(() => {
     async function fetchAll() {
       const response = await TaskAPI.getAll();
@@ -46,7 +50,7 @@ export default function Home() {
 
         {tasks.map((task) => (
           <Grid item xs={3} key={task.id}>
-            <Task {...task} />
+            <Task {...task} onTaskDelete={deleteTask} />
           </Grid>
         ))}
       </Grid>

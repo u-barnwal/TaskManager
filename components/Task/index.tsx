@@ -6,11 +6,19 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import { TaskAPI } from "../../api/task.api";
 import { TaskDTO } from "../../dto/task.dto";
 
-interface Props extends TaskDTO {}
+interface Props extends TaskDTO {
+  onTaskDelete: (id: number) => void;
+}
 
-function Task({ title, description }: Props) {
+function Task({ id, title, description, onTaskDelete }: Props) {
+  const deleteTask = async () => {
+    await TaskAPI.deleteOne(id);
+    onTaskDelete(id);
+  };
+
   return (
     <Card variant="outlined">
       <CardContent>
@@ -28,7 +36,12 @@ function Task({ title, description }: Props) {
           Edit
         </Button>
 
-        <Button size="small" variant="contained" color="secondary">
+        <Button
+          size="small"
+          variant="contained"
+          color="secondary"
+          onClick={deleteTask}
+        >
           Delete
         </Button>
       </CardActions>

@@ -23,4 +23,10 @@ export class TaskAPI {
 
     return await response.json();
   }
+
+  public static async deleteOne(id: number) {
+    await fetch(`${baseURL}/tasks/${id}`, {
+      method: "DELETE",
+    });
+  }
 }

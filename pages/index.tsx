@@ -4,9 +4,15 @@ import { useEffect, useState } from "react";
 import Task from "../components/Task";
 import { TaskDTO } from "../dto/task.dto";
 import { TaskAPI } from "../api/task.api";
+import CreateTaskModal from "../components/models/CreateTaskModel";
 
 export default function Home() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);
+  const [createTaskModelOpen, setCreateTaskModelOpen] = useState(false);
+
+  const addTask = (task: TaskDTO) => {
+    setTasks([...tasks, task]);
+  };
 
   useEffect(() => {
     async function fetchAll() {
@@ -16,7 +22,7 @@ export default function Home() {
     }
 
     fetchAll();
-  });
+  }, []);
 
   return (
     <div>
@@ -28,7 +34,12 @@ export default function Home() {
 
       <Grid container spacing={1} style={{ padding: "10px" }}>
         <Grid item xs={3}>
-          <Button size="small" variant="contained" color="primary">
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={() => setCreateTaskModelOpen(true)}
+          >
             Create Task
           </Button>
         </Grid>
@@ -39,6 +50,12 @@ export default function Home() {
           </Grid>
         ))}
       </Grid>
+
+      <CreateTaskModal
+        open={createTaskModelOpen}
+        handleClose={() => setCreateTaskModelOpen(false)}
+        onTaskCreated={addTask}
+      />
     </div>
   );
 }

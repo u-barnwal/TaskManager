@@ -5,10 +5,15 @@ import Task from "../components/Task";
 import { TaskDTO } from "../dto/task.dto";
 import { TaskAPI } from "../api/task.api";
 import CreateTaskModal from "../components/models/CreateTaskModel";
+import EditTaskModal from "../components/models/EditTaskModel";
 
 export default function Home() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);
   const [createTaskModelOpen, setCreateTaskModelOpen] = useState(false);
+  const [updateTaskModelOpen, setUpdateTaskModelOpen] = useState(false);
+  const [taskBeingEdited, setTaskBeingEdited] = useState<undefined | TaskDTO>(
+    undefined
+  );
 
   const addTask = (task: TaskDTO) => {
     setTasks([...tasks, task]);
@@ -16,6 +21,14 @@ export default function Home() {
 
   const deleteTask = (id: number) => {
     setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  const updateTask = (task: TaskDTO) => {
+    setTasks(
+      tasks.map((currentTask) =>
+        currentTask.id === task.id ? task : currentTask
+      )
+    );
   };
 
   useEffect(() => {
@@ -50,7 +63,14 @@ export default function Home() {
 
         {tasks.map((task) => (
           <Grid item xs={3} key={task.id}>
-            <Task {...task} onTaskDelete={deleteTask} />
+            <Task
+              {...task}
+              onTaskDelete={deleteTask}
+              onTaskUpdate={(task: TaskDTO) => {
+                setTaskBeingEdited(task);
+                setUpdateTaskModelOpen(true);
+              }}
+            />
           </Grid>
         ))}
       </Grid>
@@ -59,6 +79,13 @@ export default function Home() {
         open={createTaskModelOpen}
         handleClose={() => setCreateTaskModelOpen(false)}
         onTaskCreated={addTask}
+      />
+
+      <EditTaskModal
+        data={taskBeingEdited}
+        open={updateTaskModelOpen}
+        handleClose={() => setUpdateTaskModelOpen(false)}
+        onTaskUpdate={updateTask}
       />
     </div>
   );

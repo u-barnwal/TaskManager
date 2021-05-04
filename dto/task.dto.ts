@@ -4,7 +4,7 @@ export enum TaskStatus {
   Done = 2,
 }
 
-export interface TaskDTO {
+export class TaskDTO {
   id: number;
   title: string;
   description: string;

@@ -11,13 +11,28 @@ import { TaskDTO } from "../../dto/task.dto";
 
 interface Props extends TaskDTO {
   onTaskDelete: (id: number) => void;
+  onTaskUpdate: (task: TaskDTO) => void;
 }
 
-function Task({ id, title, description, onTaskDelete }: Props) {
+function Task({
+  id,
+  title,
+  description,
+  status,
+  onTaskDelete,
+  onTaskUpdate,
+}: Props) {
   const deleteTask = async () => {
     await TaskAPI.deleteOne(id);
     onTaskDelete(id);
   };
+
+  const taskDTO: TaskDTO = new TaskDTO();
+
+  taskDTO.id = id;
+  taskDTO.title = title;
+  taskDTO.description = description;
+  taskDTO.status = status;
 
   return (
     <Card variant="outlined">
@@ -32,7 +47,12 @@ function Task({ id, title, description, onTaskDelete }: Props) {
       </CardContent>
 
       <CardActions>
-        <Button size="small" variant="contained" color="primary">
+        <Button
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={() => onTaskUpdate(taskDTO)}
+        >
           Edit
         </Button>
 

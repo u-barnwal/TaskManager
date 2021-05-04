@@ -1,5 +1,6 @@
 import { CreateTaskDTO } from "../dto/create-task.dto";
 import { TaskDTO } from "../dto/task.dto";
+import { UpdateTaskDTO } from "../dto/update-task.dto";
 
 const baseURL = "http://localhost:3000";
 
@@ -28,5 +29,17 @@ export class TaskAPI {
     await fetch(`${baseURL}/tasks/${id}`, {
       method: "DELETE",
     });
+  }
+
+  public static async updateOne(id: number, updateRequest: UpdateTaskDTO) {
+    const response = await fetch(`${baseURL}/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateRequest),
+    });
+
+    return await response.json();
   }
 }

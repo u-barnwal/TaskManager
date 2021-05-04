@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Task from "../components/Task";
@@ -26,7 +26,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Grid container spacing={1}>
+      <Grid container spacing={1} style={{ padding: "10px" }}>
+        <Grid item xs={3}>
+          <Button size="small" variant="contained" color="primary">
+            Create Task
+          </Button>
+        </Grid>
+
         {tasks.map((task) => (
           <Grid item xs={3} key={task.id}>
             <Task {...task} />
